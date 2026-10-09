@@ -18,6 +18,10 @@
 	model = "Anbernic RG353V/VS";
 	compatible = "anbernic,rg353v", "rockchip,rk3566";
 
+	chosen {
+		bootargs = "";
+	};
+
 	audiopwmout_diff: audiopwmout-diff {
 		status = "disabled";
 		compatible = "simple-audio-card";
