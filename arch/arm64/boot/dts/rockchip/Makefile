@@ -148,6 +148,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-rk817-tablet-rkg11.dtb
 dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-rk817-tablet-v10.dtb
 dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-353m.dtb
 dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-353m-notimingchange.dtb
+dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-353p.dtb
 dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-353v.dtb
 dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-353v-notimingchange.dtb
 dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-503.dtb
