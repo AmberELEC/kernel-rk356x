@@ -1,0 +1,8 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+
+#include "rk3566-353m.dts"
+
+/ {
+	model = "Anbernic RG353P";
+	compatible = "anbernic,rg353p", "rockchip,rk3566";
+};
