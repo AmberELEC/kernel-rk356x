@@ -15,7 +15,7 @@
 #include "rk3566.dtsi"
 #include "rk3568-linux.dtsi"
 / {
-	model = "Anbernic RG353V/VS";
+	model = "Anbernic RG353V";
 	compatible = "anbernic,rg353v", "rockchip,rk3566";
 
 	chosen {
