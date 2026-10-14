@@ -999,7 +999,7 @@ static int dcs_bl_update_status(struct backlight_device *bl)
 {
 	struct panel_simple *p = bl_get_data(bl);
 	int ret = 0;
-	int back = bl->props.brightness;
+	int back = bl->props.brightness * 255 / bl->props.max_brightness;
 
 	if (!p->prepared)
 		return 0;
@@ -3720,11 +3720,16 @@ static int panel_simple_dsi_probe(struct mipi_dsi_device *dsi)
 
 	if (!panel->backlight) {
 		struct backlight_properties props;
+		u32 max_brightness = 255;
 
 		memset(&props, 0, sizeof(props));
 		props.type = BACKLIGHT_RAW;
-		props.brightness = 255;
-		props.max_brightness = 255;
+		of_property_read_u32(dev->of_node, "max-brightness",
+				     &max_brightness);
+		if (!max_brightness || max_brightness > 255)
+			return -EINVAL;
+		props.max_brightness = max_brightness;
+		props.brightness = props.max_brightness;
 
 		panel->backlight =
 			devm_backlight_device_register(dev, "backlight",

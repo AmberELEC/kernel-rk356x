@@ -330,11 +330,11 @@
 		status = "disabled";
 	};
 	
-	joypad: singleadc-joypad {
+	joypad: odroidgo3-joypad {
 		compatible = "singleadc-joypad";
 
-		joypad-name = "retrogame_joypad";
-		joypad-product = <0x1101>;
+		joypad-name = "GO-Super Gamepad";
+		joypad-product = <0x1100>;
 		joypad-revision = <0x0100>;
 
 		status = "okay";
@@ -438,17 +438,17 @@
 		sw9 {
 		        gpios = <&gpio3 RK_PB6 GPIO_ACTIVE_LOW>;
 		        label = "GPIO BTN_SELECT";
-		        linux,code = <BTN_SELECT>;
+		        linux,code = <BTN_TRIGGER_HAPPY1>;
 		};
 		sw10 {
 		        gpios = <&gpio3 RK_PB5 GPIO_ACTIVE_LOW>;
 		        label = "GPIO BTN_START";
-		        linux,code = <BTN_START>;
+		        linux,code = <BTN_TRIGGER_HAPPY2>;
 		};
 		sw11 {
 		        gpios = <&gpio3 RK_PB7 GPIO_ACTIVE_LOW>;
 		        label = "GPIO BTN_F";
-		        linux,code = <BTN_MODE>;
+		        linux,code = <BTN_TRIGGER_HAPPY5>;
 		};
 		sw12 {
 		        gpios = <&gpio3 RK_PB1 GPIO_ACTIVE_LOW>;
@@ -473,12 +473,12 @@
 		sw16 {
 		        gpios = <&gpio3 RK_PA1 GPIO_ACTIVE_LOW>;
 		        label = "GPIO BTN_THUMBL";
-		        linux,code = <BTN_THUMBL>;
+		        linux,code = <BTN_TRIGGER_HAPPY3>;
 		};
 		sw17 {
 		        gpios = <&gpio3 RK_PA2 GPIO_ACTIVE_LOW>;
 		        label = "GPIO BTN_THUMBR";
-		        linux,code = <BTN_THUMBR>;
+		        linux,code = <BTN_TRIGGER_HAPPY4>;
 		};
 	
     	};
@@ -544,6 +544,7 @@
 	status = "okay";
 	//rockchip,lane-rate = <1000>;
 	dsi0_panel: panel@0 {
+		max-brightness = <100>;
 		status = "okay";
 		compatible = "simple-panel-oled-dsi";
 		reg = <0>;
