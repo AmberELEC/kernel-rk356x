@@ -15,7 +15,7 @@
 #include "rk3566.dtsi"
 #include "rk3568-linux.dtsi"
 / {
-	model = "Anbernic RG353V/VS";
+	model = "Anbernic RG353V";
 	compatible = "anbernic,rg353v", "rockchip,rk3566";
 
 	chosen {
@@ -1914,4 +1914,19 @@
 			};
 	};	
 	
+};
+
+&cpu0_opp_table {
+	opp-216000000 {
+		opp-hz = /bits/ 64 <216000000>;
+		opp-microvolt = <825000 825000 1150000>;
+		clock-latency-ns = <40000>;
+	};
+};
+
+&gpu_opp_table {
+	opp-100000000 {
+		opp-hz = /bits/ 64 <100000000>;
+		opp-microvolt = <825000 1000000>;
+	};
 };
