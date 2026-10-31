@@ -284,6 +284,7 @@ struct charger_platform_data {
 	bool extcon;
 	bool validate_charger_with_pmic_plugin;
 	bool pmic_plugin_usb_fallback;
+	bool pmic_plugin_fallback_ac;
 	int gate_function_disable;
 };
 
@@ -1097,11 +1098,14 @@ static void rk817_charger_evt_worker(struct work_struct *work)
 		 * not provided an SDP/DCP/CDP classification. Use the conservative
 		 * USB charger current limit rather than leaving charging disabled.
 		 */
+		charger = charge->pdata->pmic_plugin_fallback_ac ?
+			  USB_TYPE_AC_CHARGER : USB_TYPE_USB_CHARGER;
 		dev_warn(charge->dev,
-			 "VBUS present without extcon charger type; using USB fallback\n");
+			 "VBUS present without extcon charger type; using %s fallback\n",
+			 charger == USB_TYPE_AC_CHARGER ? "AC" : "USB");
 
-		charge->usb_charger = USB_TYPE_USB_CHARGER;
-		rk817_charge_set_chrg_param(charge, USB_TYPE_USB_CHARGER);
+		charge->usb_charger = charger;
+		rk817_charge_set_chrg_param(charge, charger);
 	}
 }
 
@@ -1421,6 +1425,8 @@ static int rk817_charge_parse_dt(struct rk817_charger *charge)
 		of_property_read_bool(np, "rockchip,validate-charger-with-pmic-plugin");
 	pdata->pmic_plugin_usb_fallback =
 		of_property_read_bool(np, "rockchip,pmic-plugin-usb-fallback");
+	pdata->pmic_plugin_fallback_ac =
+		of_property_read_bool(np, "rockchip,pmic-plugin-fallback-ac");
 
 	ret = of_property_read_u32(np, "max_chrg_current",
 				   &pdata->max_chrg_current);

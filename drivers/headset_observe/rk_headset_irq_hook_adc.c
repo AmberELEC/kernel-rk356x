@@ -164,6 +164,8 @@ static irqreturn_t headset_interrupt(int irq, void *dev_id)
 	pr_info("(headset in is %s)headset status is %s\n",
 		pdata->headset_insert_type ? "high level" : "low level",
 		headset_info->headset_status ? "in" : "out");
+	if (pdata->rk817_headset_detect)
+		rk817_headset_detect(headset_info->headset_status == HEADSET_IN);
 
 	if (headset_info->headset_status == HEADSET_IN) {
 		if (pdata->chan != 0) {

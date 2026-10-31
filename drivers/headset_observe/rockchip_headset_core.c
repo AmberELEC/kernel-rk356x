@@ -135,6 +135,8 @@ static int rockchip_headset_probe(struct platform_device *pdev)
 				   &pdata->headset_wakeup);
 	if (ret < 0)
 		pdata->headset_wakeup = 1;
+	pdata->rk817_headset_detect =
+		of_property_read_bool(node, "rockchip,rk817-headset-detect");
 	if (pdata->chan) { /* hook adc mode */
 		dev_info(&pdev->dev, "headset have hook adc mode\n");
 		ret = rk_headset_adc_probe(pdev, pdata);
