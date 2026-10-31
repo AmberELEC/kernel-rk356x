@@ -1258,9 +1258,12 @@ int rk817_headset_detect(int jack_insert)
 	rk817_g->hp_inserted = jack_insert;
 
 	/*enable micbias and disable PA*/
-	if (jack_insert) {		
+	if (jack_insert) {
 		rk817_codec_ctl_gpio(rk817, CODEC_SET_SPK, 0);
-	}else{
+	} else if (rk817->playback_path == SPK_PATH ||
+		   rk817->playback_path == RING_SPK ||
+		   rk817->playback_path == SPK_HP ||
+		   rk817->playback_path == RING_SPK_HP) {
 		rk817_codec_ctl_gpio(rk817, CODEC_SET_SPK, 1);
 	}
 
@@ -1327,7 +1330,7 @@ static int rk817_digital_mute_dac(struct snd_soc_dai *dai, int mute, int stream)
 			snd_soc_component_write(component, RK817_CODEC_ADAC_CFG1,
 					PWD_DACBIAS_ON | PWD_DACD_ON |
 					PWD_DACL_ON | PWD_DACR_ON);
-			rk817_codec_ctl_gpio(rk817, CODEC_SET_SPK, 1);
+			rk817_codec_ctl_gpio(rk817, CODEC_SET_SPK, !rk817->hp_inserted);
 			rk817_codec_ctl_gpio(rk817, CODEC_SET_HP, 1);
 			break;
 		default:
@@ -1676,10 +1679,8 @@ static int rk817_platform_probe(struct platform_device *pdev)
 
 	#if defined(CONFIG_RK817_HEADSET)
 	rk817_g	= rk817_codec_data;
-	if(rk817_g->hp_inserted)
-		rk817_g->hp_inserted = true;
-	else
-		rk817_g->hp_inserted = false;
+	/* the jack may have been reported before probe */
+	rk817_g->hp_inserted = rk817_hp_inserted;
 	#endif
 
 	platform_set_drvdata(pdev, rk817_codec_data);

@@ -25,9 +25,16 @@ struct rk_headset_pdata {
 #endif
 	struct iio_channel *chan;
 	int headset_wakeup;
+	bool rk817_headset_detect;
 };
 
 #define HOOK_KEY_CODE KEY_MEDIA
+
+#if IS_ENABLED(CONFIG_SND_SOC_RK817)
+int rk817_headset_detect(int jack_insert);
+#else
+static inline int rk817_headset_detect(int jack_insert) { return 0; }
+#endif
 
 int rk_headset_probe(struct platform_device *pdev,
 		     struct rk_headset_pdata *pdata);
